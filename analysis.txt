@@ -1,0 +1,14 @@
+This is a text analysis of the bricknbolt webpage layout.
+
+1. Header: Logo, Links to Cities, Our Process, Why Us, Testimonials, Prices, and a 'Get in Touch' button.
+2. Hero Section: Headline ('Connect with Trusted Home Builders'), lead generation form for selecting city, location, and project start date, with a 'Get Started For Free' button.
+3. Statistics Section: Highlights metrics like Homes Built (10,142+), Cities (10+), Execution speed (8 months), and Design Plans (14,247).
+4. Cities Section: Lists the 10+ operational cities (Bangalore, Delhi, Chennai, etc.).
+5. Process Section ('Our Construction Process'): Explains the 5-step process: Connect with Us, Define Requirements, Approve Designs, Live Progress, and Move In.
+6. Value Proposition/Guarantees Section: Highlights features like 'No hidden costs', 'Money stays protected in escrow', 'Timeline guarantee', 'In-House Experts', 'Professional Contractors', and '10 Year Warranty'.
+7. Trust Badges/Features List: A horizontal row of badges: NO COST OVERRUNS, MONEY SAFETY, NO DELAY POLICY, SOLID TEAM, VERIFIED CONTRACTORS, 10 YEAR WARRANTY.
+8. Testimonials Section ('Homeowner Stories'): Mentions hearing from happy homeowners.
+9. Packages Section ('Our Packages'): Lists Basic, Classic, Premium, and Royal packages with prices.
+10. Competitor Comparison Section ('Why Us?'): A table comparing Brick & Bolt vs 'Others' on parameters like App-Based Tracking, Escrow Money Safety, Design Options, Quality Checks, etc.
+11. Secondary Lead Capture Form: A repeated form asking for basic details to book a free consultation.
+12. Footer: Terms & Conditions, Privacy Policy, SEO content paragraph about the company, Copyright notice.
