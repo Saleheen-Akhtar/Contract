@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+// Inter is a good substitute for Helvetica/Lausanne if we tighten it up
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Classics Group | Modern Real Estate & Construction",
-  description: "End-to-end home construction and real estate development.",
+  title: "Classics Group",
+  description: "Real Estate Development",
 };
 
 export default function RootLayout({
@@ -15,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-zinc-950 text-white antialiased`}>{children}</body>
+    <html lang="en">
+      <body className={`${inter.className} bg-white text-black antialiased`}>{children}</body>
     </html>
   );
 }
