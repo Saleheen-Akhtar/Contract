@@ -1,19 +1,23 @@
 import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import DarkSection from "@/components/DarkSection";
+import About from "@/components/About";
+import Process from "@/components/Process";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black selection:bg-black selection:text-white relative font-sans overflow-x-hidden">
+    <main className="min-h-screen bg-[#FDFDFD] text-[#111111] selection:bg-[#EAEAEA] selection:text-[#111111] relative font-sans overflow-x-hidden">
       <LoadingScreen />
       <Navbar />
-      <div className="pt-32 px-6 md:px-12 relative z-10 bg-white">
+      <div className="relative z-10">
         <Hero />
-        <Stats />
+        <About />
+        <Process />
+        <Contact />
+        <Footer />
       </div>
-      <DarkSection />
     </main>
   );
 }
