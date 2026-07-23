@@ -1,0 +1,12 @@
+
+> classics-group@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 1026ms
+
+ GET / 200 in 1130ms (next.js: 715ms, application-code: 415ms)
+ GET / 200 in 81ms (next.js: 6ms, application-code: 75ms)
+✓ Compiled in 401ms
