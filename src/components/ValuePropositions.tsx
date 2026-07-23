@@ -1,68 +1,99 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { ShieldCheck, Scale, Wallet, Construction } from "lucide-react";
 
 const PROPOSITIONS = [
   {
     icon: Construction,
-    title: "470+ Quality Audits",
-    description: "Every stage, from foundation to ultra-luxury finishes, undergoes rigorous multi-stage QASCON checks to ensure unparalleled precision.",
+    title: "470+ Audits",
+    description: "Every stage undergoes rigorous multi-stage QASCON checks.",
+    number: "01"
   },
   {
     icon: Scale,
     title: "Zero Price Escalation",
-    description: "Absolute transparency. Once the contract is signed and the vision is set, there are no hidden costs or sudden price hikes.",
+    description: "Absolute transparency. No hidden costs or sudden hikes.",
+    number: "02"
   },
   {
     icon: Wallet,
-    title: "Secure Escrow Model",
-    description: "Payments are linked exclusively to progress. Funds are released only upon the flawless completion of predefined architectural milestones.",
+    title: "Secure Escrow",
+    description: "Funds released only upon flawless completion of milestones.",
+    number: "03"
   },
   {
     icon: ShieldCheck,
     title: "10-Year Warranty",
-    description: "We stand by our masterpieces. A comprehensive decade-long warranty covers the structural integrity and core foundation of your residence.",
+    description: "A decade-long warranty covers the structural integrity.",
+    number: "04"
   },
 ];
 
 export default function ValuePropositions() {
-  return (
-    <section className="py-24 px-6 lg:px-12 bg-white text-charcoal">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
-          className="mb-16 md:mb-24"
-        >
-          <p className="uppercase tracking-[0.2em] text-sm text-charcoal/50 mb-4">Our Commitment</p>
-          <h2 className="text-3xl md:text-5xl font-serif max-w-3xl leading-tight">
-            Redefining trust in ultra-luxury construction.
-          </h2>
-        </motion.div>
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 border-t border-charcoal/10 pt-16">
-          {PROPOSITIONS.map((prop, index) => (
-            <motion.div
-              key={prop.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="flex flex-col"
-            >
-              <div className="mb-6 h-12 w-12 rounded-full border border-charcoal/10 flex items-center justify-center text-bronze">
-                <prop.icon strokeWidth={1.5} size={24} />
-              </div>
-              <h3 className="text-xl font-serif mb-4">{prop.title}</h3>
-              <p className="text-sm text-charcoal/60 leading-relaxed">
-                {prop.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const scrollEl = scrollRef.current;
+
+    if (container && scrollEl) {
+      const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
+
+      const tween = gsap.to(scrollEl, {
+        x: -scrollWidth,
+        ease: "none",
+        scrollTrigger: {
+          trigger: container,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: `+=${scrollWidth}`,
+        }
+      });
+
+      return () => {
+        tween.kill();
+        ScrollTrigger.getAll().forEach(t => t.kill());
+      };
+    }
+  }, []);
+
+  return (
+    <section
+      ref={containerRef}
+      className="h-screen bg-charcoal text-white overflow-hidden relative border-y border-white/10"
+    >
+      <div className="absolute top-12 left-6 lg:left-12 z-10">
+        <h2 className="text-[clamp(2rem,4vw,4rem)] font-serif leading-none mix-blend-difference">
+          Trust &<br/>Transparency
+        </h2>
+      </div>
+
+      <div
+        ref={scrollRef}
+        className="flex h-full w-[350vw] md:w-[250vw] lg:w-[200vw] items-center px-[20vw]"
+      >
+        {PROPOSITIONS.map((prop) => (
+          <div
+            key={prop.title}
+            className="w-[80vw] sm:w-[50vw] lg:w-[40vw] flex-shrink-0 px-8 lg:px-16 flex flex-col justify-center border-l border-white/20 h-[50vh]"
+          >
+            <div className="flex justify-between items-start mb-12">
+              <span className="text-xl font-serif text-bronze">{prop.number}</span>
+              <prop.icon strokeWidth={1} size={48} className="text-white/30" />
+            </div>
+            <h3 className="text-4xl md:text-5xl font-serif mb-6 leading-tight max-w-sm">{prop.title}</h3>
+            <p className="text-lg text-white/60 leading-relaxed max-w-sm font-light">
+              {prop.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

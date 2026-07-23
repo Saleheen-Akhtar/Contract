@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 const STEPS = [
   {
@@ -26,43 +28,91 @@ const STEPS = [
 ];
 
 export default function Process() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const steps = gsap.utils.toArray('.process-step') as HTMLElement[];
+
+    steps.forEach((step) => {
+      const line = step.querySelector('.process-line');
+      const content = step.querySelector('.process-content');
+      const number = step.querySelector('.process-number');
+
+      // Animate line growing
+      if (line) {
+        gsap.fromTo(
+          line,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: step,
+              start: "top 80%",
+              end: "center center",
+              scrub: true,
+            },
+          }
+        );
+      }
+
+      // Fade in content
+      if (content && number) {
+        gsap.fromTo(
+          [number, content],
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: step,
+              start: "top 75%",
+            },
+          }
+        );
+      }
+    });
+  }, []);
+
   return (
-    <section className="py-32 px-6 lg:px-12 bg-sand text-charcoal">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-20">
-          <p className="uppercase tracking-[0.2em] text-sm text-charcoal/50 mb-4">Methodology</p>
-          <h2 className="text-4xl md:text-5xl font-serif">The Process</h2>
+    <section ref={containerRef} className="py-48 px-6 lg:px-12 bg-cream text-charcoal border-t border-charcoal/10">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="mb-32 flex flex-col md:flex-row justify-between items-end gap-12">
+          <h2 className="text-[clamp(4rem,8vw,10rem)] leading-none font-serif tracking-tighter uppercase">
+            THE<br/>PROCESS
+          </h2>
+          <p className="text-xl max-w-md text-charcoal/70 pb-4 leading-relaxed font-light">
+            A meticulous methodology designed to translate your abstract vision into tangible spatial poetry.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {STEPS.map((step, index) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="relative group"
-            >
-              <div className="text-6xl font-light text-charcoal/10 mb-6 font-serif group-hover:text-bronze/20 transition-colors">
-                {step.number}
-              </div>
-              <h3 className="text-xl font-serif mb-4">{step.title}</h3>
-              <p className="text-sm text-charcoal/70 leading-relaxed">
-                {step.description}
-              </p>
+        <div className="flex flex-col gap-16">
+          {STEPS.map((step) => (
+            <div key={step.number} className="process-step relative group">
 
-              {/* Divider line that grows on hover */}
-              <div className="mt-8 h-[1px] w-full bg-charcoal/10 relative overflow-hidden">
-                <motion.div
-                  className="absolute top-0 left-0 h-full w-full bg-bronze origin-left"
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, delay: 0.5 + (index * 0.2) }}
-                />
+              <div className="flex flex-col md:flex-row gap-8 md:gap-24 items-start md:items-center py-12">
+                <div className="process-number text-6xl md:text-8xl font-serif text-charcoal/20 group-hover:text-bronze transition-colors duration-500 w-32">
+                  {step.number}
+                </div>
+
+                <div className="process-content flex-1 max-w-3xl">
+                  <h3 className="text-4xl md:text-5xl font-serif mb-6 group-hover:translate-x-4 transition-transform duration-500">{step.title}</h3>
+                  <p className="text-lg text-charcoal/60 leading-relaxed font-light">
+                    {step.description}
+                  </p>
+                </div>
               </div>
-            </motion.div>
+
+              {/* Horizontal Divider Line */}
+              <div className="w-full h-[1px] bg-charcoal/10 absolute bottom-0 left-0">
+                <div className="process-line w-full h-full bg-charcoal origin-left"></div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
