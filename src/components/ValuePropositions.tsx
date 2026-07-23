@@ -8,26 +8,26 @@ import { ShieldCheck, Scale, Wallet, Construction } from "lucide-react";
 const PROPOSITIONS = [
   {
     icon: Construction,
-    title: "470+ Quality Audits",
-    description: "Every stage, from foundation to ultra-luxury finishes, undergoes rigorous multi-stage QASCON checks to ensure unparalleled precision.",
+    title: "470+ Audits",
+    description: "Every stage undergoes rigorous multi-stage QASCON checks.",
     number: "01"
   },
   {
     icon: Scale,
     title: "Zero Price Escalation",
-    description: "Absolute transparency. Once the contract is signed and the vision is set, there are no hidden costs or sudden price hikes.",
+    description: "Absolute transparency. No hidden costs or sudden hikes.",
     number: "02"
   },
   {
     icon: Wallet,
-    title: "Secure Escrow Model",
-    description: "Payments are linked exclusively to progress. Funds are released only upon the flawless completion of predefined architectural milestones.",
+    title: "Secure Escrow",
+    description: "Funds released only upon flawless completion of milestones.",
     number: "03"
   },
   {
     icon: ShieldCheck,
     title: "10-Year Warranty",
-    description: "We stand by our masterpieces. A comprehensive decade-long warranty covers the structural integrity and core foundation of your residence.",
+    description: "A decade-long warranty covers the structural integrity.",
     number: "04"
   },
 ];
@@ -43,7 +43,6 @@ export default function ValuePropositions() {
     const scrollEl = scrollRef.current;
 
     if (container && scrollEl) {
-      // Calculate how far to scroll horizontally
       const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
 
       const tween = gsap.to(scrollEl, {
@@ -55,7 +54,6 @@ export default function ValuePropositions() {
           scrub: 1,
           start: "top top",
           end: `+=${scrollWidth}`,
-          // invalidateOnRefresh: true,
         }
       });
 
@@ -69,33 +67,29 @@ export default function ValuePropositions() {
   return (
     <section
       ref={containerRef}
-      className="h-screen bg-charcoal text-white overflow-hidden relative"
+      className="h-screen bg-charcoal text-white overflow-hidden relative border-y border-white/10"
     >
-      <div className="absolute top-12 left-6 lg:left-12 z-10 mix-blend-difference">
-        <p className="uppercase tracking-[0.2em] text-sm text-white/50 mb-2">Our Commitment</p>
-        <h2 className="text-3xl md:text-5xl font-serif">
-          Redefining trust.
+      <div className="absolute top-12 left-6 lg:left-12 z-10">
+        <h2 className="text-[clamp(2rem,4vw,4rem)] font-serif leading-none mix-blend-difference">
+          Trust &<br/>Transparency
         </h2>
       </div>
 
       <div
         ref={scrollRef}
-        className="flex h-full w-[400vw] sm:w-[300vw] lg:w-[250vw] items-center px-[20vw]"
+        className="flex h-full w-[350vw] md:w-[250vw] lg:w-[200vw] items-center px-[20vw]"
       >
         {PROPOSITIONS.map((prop) => (
           <div
             key={prop.title}
-            className="w-[80vw] sm:w-[50vw] lg:w-[40vw] flex-shrink-0 px-8 lg:px-16 flex flex-col justify-center"
+            className="w-[80vw] sm:w-[50vw] lg:w-[40vw] flex-shrink-0 px-8 lg:px-16 flex flex-col justify-center border-l border-white/20 h-[50vh]"
           >
-            <div className="text-[10rem] md:text-[15rem] leading-none font-serif text-white/5 absolute -z-10 -translate-y-20 -translate-x-10">
-              {prop.number}
+            <div className="flex justify-between items-start mb-12">
+              <span className="text-xl font-serif text-bronze">{prop.number}</span>
+              <prop.icon strokeWidth={1} size={48} className="text-white/30" />
             </div>
-
-            <div className="mb-8 h-16 w-16 rounded-full border border-white/20 flex items-center justify-center text-bronze backdrop-blur-md bg-white/5">
-              <prop.icon strokeWidth={1.5} size={32} />
-            </div>
-            <h3 className="text-3xl md:text-5xl font-serif mb-6 leading-tight">{prop.title}</h3>
-            <p className="text-lg text-white/60 leading-relaxed max-w-md">
+            <h3 className="text-4xl md:text-5xl font-serif mb-6 leading-tight max-w-sm">{prop.title}</h3>
+            <p className="text-lg text-white/60 leading-relaxed max-w-sm font-light">
               {prop.description}
             </p>
           </div>

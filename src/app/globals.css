@@ -16,6 +16,12 @@
   body {
     background-color: var(--color-cream);
     color: var(--color-charcoal);
+    cursor: none; /* Hide default cursor for custom cursor */
+  }
+
+  /* Ensure interactive elements also hide default cursor so our custom one handles it */
+  a, button, input, textarea, select {
+    cursor: none;
   }
 }
 

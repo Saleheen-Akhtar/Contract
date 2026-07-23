@@ -38,19 +38,20 @@ export default function Process() {
     steps.forEach((step) => {
       const line = step.querySelector('.process-line');
       const content = step.querySelector('.process-content');
+      const number = step.querySelector('.process-number');
 
       // Animate line growing
       if (line) {
         gsap.fromTo(
           line,
-          { scaleY: 0 },
+          { scaleX: 0 },
           {
-            scaleY: 1,
+            scaleX: 1,
             ease: "none",
             scrollTrigger: {
               trigger: step,
-              start: "top center",
-              end: "bottom center",
+              start: "top 80%",
+              end: "center center",
               scrub: true,
             },
           }
@@ -58,18 +59,19 @@ export default function Process() {
       }
 
       // Fade in content
-      if (content) {
+      if (content && number) {
         gsap.fromTo(
-          content,
-          { opacity: 0, x: 50 },
+          [number, content],
+          { opacity: 0, y: 50 },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
             duration: 1,
-            ease: "power3.out",
+            stagger: 0.2,
+            ease: "power4.out",
             scrollTrigger: {
               trigger: step,
-              start: "top 70%",
+              start: "top 75%",
             },
           }
         );
@@ -78,35 +80,37 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 px-6 lg:px-12 bg-sand text-charcoal">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-24 text-center">
-          <p className="uppercase tracking-[0.2em] text-sm text-charcoal/50 mb-4">Methodology</p>
-          <h2 className="text-5xl md:text-6xl font-serif">The Process</h2>
+    <section ref={containerRef} className="py-48 px-6 lg:px-12 bg-cream text-charcoal border-t border-charcoal/10">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="mb-32 flex flex-col md:flex-row justify-between items-end gap-12">
+          <h2 className="text-[clamp(4rem,8vw,10rem)] leading-none font-serif tracking-tighter uppercase">
+            THE<br/>PROCESS
+          </h2>
+          <p className="text-xl max-w-md text-charcoal/70 pb-4 leading-relaxed font-light">
+            A meticulous methodology designed to translate your abstract vision into tangible spatial poetry.
+          </p>
         </div>
 
-        <div className="flex flex-col">
-          {STEPS.map((step, index) => (
-            <div key={step.number} className="process-step relative flex gap-8 md:gap-16 pb-24 last:pb-0">
+        <div className="flex flex-col gap-16">
+          {STEPS.map((step) => (
+            <div key={step.number} className="process-step relative group">
 
-              {/* Vertical Timeline */}
-              <div className="relative flex flex-col items-center">
-                <div className="text-3xl font-serif text-bronze mb-4 bg-sand z-10 py-2">
+              <div className="flex flex-col md:flex-row gap-8 md:gap-24 items-start md:items-center py-12">
+                <div className="process-number text-6xl md:text-8xl font-serif text-charcoal/20 group-hover:text-bronze transition-colors duration-500 w-32">
                   {step.number}
                 </div>
-                {index !== STEPS.length - 1 && (
-                  <div className="absolute top-16 bottom-0 w-[1px] bg-charcoal/10">
-                    <div className="process-line w-full h-full bg-bronze origin-top"></div>
-                  </div>
-                )}
+
+                <div className="process-content flex-1 max-w-3xl">
+                  <h3 className="text-4xl md:text-5xl font-serif mb-6 group-hover:translate-x-4 transition-transform duration-500">{step.title}</h3>
+                  <p className="text-lg text-charcoal/60 leading-relaxed font-light">
+                    {step.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Content */}
-              <div className="process-content pt-4">
-                <h3 className="text-3xl font-serif mb-6">{step.title}</h3>
-                <p className="text-lg text-charcoal/70 leading-relaxed max-w-xl">
-                  {step.description}
-                </p>
+              {/* Horizontal Divider Line */}
+              <div className="w-full h-[1px] bg-charcoal/10 absolute bottom-0 left-0">
+                <div className="process-line w-full h-full bg-charcoal origin-left"></div>
               </div>
             </div>
           ))}
