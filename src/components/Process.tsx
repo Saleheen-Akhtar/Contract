@@ -2,64 +2,65 @@
 
 import { motion } from "framer-motion";
 
-const steps = [
+const STEPS = [
   {
-    num: "01",
-    title: "Discovery & Planning",
-    desc: "We align on your vision, budget, and timeline. Our architects draft custom blueprints ensuring optimal use of space and aesthetics."
+    number: "01",
+    title: "Discovery & Vision",
+    description: "We begin by understanding your aspirations, lifestyle, and the essence of what you wish to create. This foundational dialogue shapes the soul of the project.",
   },
   {
-    num: "02",
-    title: "Approvals & Prep",
-    desc: "We handle all the red tape. From city permits to site clearing, we ensure everything is legally sound before ground breaks."
+    number: "02",
+    title: "Architectural Concept",
+    description: "Our designers translate your vision into spatial poetry. We present initial concepts, exploring form, light, and context to define the architectural narrative.",
   },
   {
-    num: "03",
-    title: "Live Construction",
-    desc: "Track progress in real-time via our portal. We execute with precision, running quality checks at every major milestone."
+    number: "03",
+    title: "Refinement & Details",
+    description: "Every material is selected with intent. We refine the concept, engineering the intricate details that transform a space into a quiet luxury experience.",
   },
   {
-    num: "04",
-    title: "Handover",
-    desc: "A final walkthrough, keys handed over, and you step into your pristine, move-in-ready home backed by our warranty."
-  }
+    number: "04",
+    title: "Realisation",
+    description: "Our master craftsmen and project managers bring the vision to life, ensuring flawless execution and a seamless transition into your new masterpiece.",
+  },
 ];
 
 export default function Process() {
   return (
-    <section className="py-32 px-6 md:px-12 bg-white text-zinc-950">
+    <section className="py-32 px-6 lg:px-12 bg-sand text-charcoal">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="mb-24"
-        >
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-            How we <span className="text-blue-600">build.</span>
-          </h2>
-          <p className="text-xl text-zinc-600 max-w-2xl">
-            A seamless, transparent journey from a vacant plot to your dream home.
-          </p>
-        </motion.div>
+        <div className="mb-20">
+          <p className="uppercase tracking-[0.2em] text-sm text-charcoal/50 mb-4">Methodology</p>
+          <h2 className="text-4xl md:text-5xl font-serif">The Process</h2>
+        </div>
 
-        <div className="space-y-12">
-          {steps.map((step, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {STEPS.map((step, index) => (
             <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
+              key={step.number}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className="flex flex-col md:flex-row gap-6 md:gap-16 border-t border-zinc-200 pt-12 group"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, delay: index * 0.15 }}
+              className="relative group"
             >
-              <div className="text-6xl md:text-8xl font-bold text-zinc-200 group-hover:text-blue-600 transition-colors duration-500">
-                {step.num}
+              <div className="text-6xl font-light text-charcoal/10 mb-6 font-serif group-hover:text-bronze/20 transition-colors">
+                {step.number}
               </div>
-              <div className="md:mt-4">
-                <h3 className="text-3xl md:text-4xl font-semibold mb-4">{step.title}</h3>
-                <p className="text-lg text-zinc-600 max-w-2xl leading-relaxed">{step.desc}</p>
+              <h3 className="text-xl font-serif mb-4">{step.title}</h3>
+              <p className="text-sm text-charcoal/70 leading-relaxed">
+                {step.description}
+              </p>
+
+              {/* Divider line that grows on hover */}
+              <div className="mt-8 h-[1px] w-full bg-charcoal/10 relative overflow-hidden">
+                <motion.div
+                  className="absolute top-0 left-0 h-full w-full bg-bronze origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, delay: 0.5 + (index * 0.2) }}
+                />
               </div>
             </motion.div>
           ))}
