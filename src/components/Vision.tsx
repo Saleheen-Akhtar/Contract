@@ -13,7 +13,7 @@ export default function Vision() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       if (containerRef.current && textRef.current && bgRef.current && pinContainerRef.current) {
 
         // Pin the section for an extended scroll effect (Era style)

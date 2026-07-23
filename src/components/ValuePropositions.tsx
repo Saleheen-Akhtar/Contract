@@ -42,7 +42,7 @@ export default function ValuePropositions() {
     const container = containerRef.current;
     const scrollEl = scrollRef.current;
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       if (container && scrollEl) {
         const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
 
