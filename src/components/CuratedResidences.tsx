@@ -38,7 +38,7 @@ export default function CuratedResidences() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.project-card') as HTMLElement[];
 
       cards.forEach((card) => {

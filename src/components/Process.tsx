@@ -33,7 +33,7 @@ export default function Process() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const steps = gsap.utils.toArray('.process-step') as HTMLElement[];
 
       steps.forEach((step) => {
