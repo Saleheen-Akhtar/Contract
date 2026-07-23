@@ -13,57 +13,59 @@ export default function Vision() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (containerRef.current && textRef.current && bgRef.current && pinContainerRef.current) {
+    let ctx = gsap.context(() => {
+      if (containerRef.current && textRef.current && bgRef.current && pinContainerRef.current) {
 
-      // Pin the section for an extended scroll effect (Era style)
-      gsap.to(pinContainerRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          start: "top top",
-          end: "+=150%", // Keep it pinned for 1.5x the height
-          scrub: true,
-        }
-      });
-
-      // Extreme Parallax background zoom and pan
-      gsap.fromTo(
-        bgRef.current,
-        { scale: 1.5, y: "-10%" },
-        {
-          scale: 1,
-          y: "10%",
-          ease: "none",
+        // Pin the section for an extended scroll effect (Era style)
+        gsap.to(pinContainerRef.current, {
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
+            pin: true,
+            start: "top top",
+            end: "+=150%", // Keep it pinned for 1.5x the height
             scrub: true,
-          },
-        }
-      );
+          }
+        });
 
-      // Clip-path reveal for text
-      const words = textRef.current.querySelectorAll('.word-inner');
+        // Extreme Parallax background zoom and pan
+        gsap.fromTo(
+          bgRef.current,
+          { scale: 1.5, y: "-10%" },
+          {
+            scale: 1,
+            y: "10%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
 
-      gsap.fromTo(
-        words,
-        { y: "110%", rotateZ: 5 },
-        {
-          y: "0%",
-          rotateZ: 0,
-          stagger: 0.1,
-          duration: 1.2,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top center",
-            // end: "center center",
-            // scrub: true, // we could scrub, but Era often uses triggered animations for text
-          },
-        }
-      );
-    }
+        // Clip-path reveal for text
+        const words = textRef.current.querySelectorAll('.word-inner');
+
+        gsap.fromTo(
+          words,
+          { y: "110%", rotateZ: 5 },
+          {
+            y: "0%",
+            rotateZ: 0,
+            stagger: 0.1,
+            duration: 1.2,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top center",
+            },
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const text = "We craft timeless environments that elevate the art of living.";

@@ -42,26 +42,25 @@ export default function ValuePropositions() {
     const container = containerRef.current;
     const scrollEl = scrollRef.current;
 
-    if (container && scrollEl) {
-      const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
+    let ctx = gsap.context(() => {
+      if (container && scrollEl) {
+        const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
 
-      const tween = gsap.to(scrollEl, {
-        x: -scrollWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: `+=${scrollWidth}`,
-        }
-      });
+        gsap.to(scrollEl, {
+          x: -scrollWidth,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: `+=${scrollWidth}`,
+          }
+        });
+      }
+    }, containerRef); // Scopes all animations and ScrollTriggers to this component
 
-      return () => {
-        tween.kill();
-        ScrollTrigger.getAll().forEach(t => t.kill());
-      };
-    }
+    return () => ctx.revert(); // Automatically cleans up everything inside the context
   }, []);
 
   return (

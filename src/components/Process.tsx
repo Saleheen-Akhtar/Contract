@@ -33,50 +33,54 @@ export default function Process() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const steps = gsap.utils.toArray('.process-step') as HTMLElement[];
+    let ctx = gsap.context(() => {
+      const steps = gsap.utils.toArray('.process-step') as HTMLElement[];
 
-    steps.forEach((step) => {
-      const line = step.querySelector('.process-line');
-      const content = step.querySelector('.process-content');
-      const number = step.querySelector('.process-number');
+      steps.forEach((step) => {
+        const line = step.querySelector('.process-line');
+        const content = step.querySelector('.process-content');
+        const number = step.querySelector('.process-number');
 
-      // Animate line growing
-      if (line) {
-        gsap.fromTo(
-          line,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: step,
-              start: "top 80%",
-              end: "center center",
-              scrub: true,
-            },
-          }
-        );
-      }
+        // Animate line growing
+        if (line) {
+          gsap.fromTo(
+            line,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: step,
+                start: "top 80%",
+                end: "center center",
+                scrub: true,
+              },
+            }
+          );
+        }
 
-      // Fade in content
-      if (content && number) {
-        gsap.fromTo(
-          [number, content],
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: step,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-    });
+        // Fade in content
+        if (content && number) {
+          gsap.fromTo(
+            [number, content],
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              stagger: 0.2,
+              ease: "power4.out",
+              scrollTrigger: {
+                trigger: step,
+                start: "top 75%",
+              },
+            }
+          );
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

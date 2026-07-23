@@ -38,68 +38,72 @@ export default function CuratedResidences() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const cards = gsap.utils.toArray('.project-card') as HTMLElement[];
+    let ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.project-card') as HTMLElement[];
 
-    cards.forEach((card) => {
-      const imgContainer = card.querySelector('.img-container');
-      const img = card.querySelector('.parallax-img');
-      const textBlock = card.querySelector('.text-block');
+      cards.forEach((card) => {
+        const imgContainer = card.querySelector('.img-container');
+        const img = card.querySelector('.parallax-img');
+        const textBlock = card.querySelector('.text-block');
 
-      // Extreme clip-path reveal (Era style)
-      if (imgContainer) {
-        gsap.fromTo(
-          imgContainer,
-          { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" },
-          {
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-            ease: "power4.inOut",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              end: "top 40%",
-              scrub: 1.5, // Smooth scrubbing enabled
-            },
-          }
-        );
-      }
+        // Extreme clip-path reveal (Era style)
+        if (imgContainer) {
+          gsap.fromTo(
+            imgContainer,
+            { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" },
+            {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+              ease: "power4.inOut",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                end: "top 40%",
+                scrub: 1.5, // Smooth scrubbing enabled
+              },
+            }
+          );
+        }
 
-      // Inner Image scale & parallax
-      if (img) {
-        gsap.fromTo(
-          img,
-          { scale: 1.3, y: "-20%" },
-          {
-            scale: 1,
-            y: "10%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-      }
+        // Inner Image scale & parallax
+        if (img) {
+          gsap.fromTo(
+            img,
+            { scale: 1.3, y: "-20%" },
+            {
+              scale: 1,
+              y: "10%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        }
 
-      // Text block staggered reveal
-      if (textBlock) {
-        gsap.fromTo(
-          textBlock,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 70%",
-            },
-          }
-        );
-      }
-    });
+        // Text block staggered reveal
+        if (textBlock) {
+          gsap.fromTo(
+            textBlock,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 70%",
+              },
+            }
+          );
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -137,7 +141,7 @@ export default function CuratedResidences() {
               {/* Text Block */}
               <div className="text-block w-full md:w-[35%] flex flex-col justify-center px-4 md:px-12">
                 <span className="text-sm text-charcoal/40 font-serif italic mb-6">
-                  {project.number || `0${index + 1}`} — {project.year}
+                  {`0${index + 1}`} — {project.year}
                 </span>
                 <h3 className="text-5xl lg:text-7xl font-serif mb-8 group-hover:text-bronze transition-colors">
                   {project.title}
