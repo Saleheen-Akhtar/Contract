@@ -1,30 +1,93 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 export default function Vision() {
-  return (
-    <section className="py-32 px-6 lg:px-12 bg-cream text-charcoal flex items-center justify-center min-h-[70vh]">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="uppercase tracking-[0.2em] text-sm text-charcoal/50 mb-8"
-        >
-          The Vision
-        </motion.p>
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-3xl md:text-5xl lg:text-6xl font-serif leading-tight text-charcoal"
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (containerRef.current && textRef.current && bgRef.current) {
+      // Parallax background
+      gsap.fromTo(
+        bgRef.current,
+        { y: "-20%" },
+        {
+          y: "20%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+
+      // Massive text reveal
+      const words = textRef.current.querySelectorAll('.word');
+
+      gsap.fromTo(
+        words,
+        { opacity: 0, y: 50, rotateX: -90 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          stagger: 0.1,
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 60%",
+            end: "center center",
+            scrub: 1,
+          },
+        }
+      );
+    }
+  }, []);
+
+  const text = "We craft timeless environments that elevate the art of living.";
+  const splitText = text.split(" ").map((word, i) => (
+    <span key={i} className="word inline-block mr-4 mb-4 origin-bottom" style={{ perspective: "1000px" }}>
+      {word}
+    </span>
+  ));
+
+  return (
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal text-white py-32 px-6 lg:px-12"
+    >
+      {/* Background Parallax Image */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 z-0 opacity-40 scale-110"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop"
+          alt="Vision Background"
+          className="w-full h-full object-cover grayscale mix-blend-overlay"
+        />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto text-center">
+        <p className="uppercase tracking-[0.2em] text-sm text-white/50 mb-12">
+          The Vision
+        </p>
+
+        <h2
+          ref={textRef}
+          className="text-5xl md:text-7xl lg:text-8xl font-serif leading-tight text-white flex flex-wrap justify-center"
         >
-          We craft <span className="italic font-light text-bronze">timeless</span> environments that elevate the art of living. Every detail considered, every space designed with profound intention.
-        </motion.h2>
+          {splitText}
+        </h2>
       </div>
     </section>
   );
