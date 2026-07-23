@@ -107,7 +107,7 @@ export default function CuratedResidences() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-48 px-6 lg:px-12 bg-white text-charcoal overflow-hidden relative z-10">
+    <section id="work" ref={containerRef} className="py-48 px-6 lg:px-12 bg-white text-charcoal overflow-hidden relative z-10">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-32 gap-6 border-b border-charcoal/20 pb-12">
           <div>

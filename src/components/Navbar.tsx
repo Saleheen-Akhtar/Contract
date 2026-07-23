@@ -13,18 +13,17 @@ export default function Navbar() {
       <div className="bg-white/90 backdrop-blur-md px-6 py-4 flex gap-12 items-center text-sm font-medium tracking-tight rounded-[4px] pointer-events-auto border border-charcoal/10 shadow-sm">
         <div className="font-bold text-lg tracking-tighter pr-4 text-charcoal">CLASSICS</div>
         <div className="hidden md:flex gap-8 text-[15px] text-charcoal/80">
-          <a href="#" className="hover:text-charcoal transition-colors">Work</a>
-          <a href="#" className="hover:text-charcoal transition-colors">Approach</a>
-          <a href="#" className="hover:text-charcoal transition-colors">About</a>
-          <a href="#" className="hover:text-charcoal transition-colors">Process</a>
-          <a href="#" className="hover:text-charcoal transition-colors">Contact</a>
+          <a href="#work" className="hover:text-charcoal transition-colors">Work</a>
+          <a href="#process" className="hover:text-charcoal transition-colors">Process</a>
+          <a href="#faq" className="hover:text-charcoal transition-colors">FAQ</a>
+          <a href="#contact" className="hover:text-charcoal transition-colors">Contact</a>
         </div>
       </div>
 
-      <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-[4px] text-[15px] font-medium flex items-center gap-3 cursor-pointer hover:bg-cream transition-colors pointer-events-auto border border-charcoal/10 shadow-sm text-charcoal">
+      <a href="#contact" className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-[4px] text-[15px] font-medium flex items-center gap-3 cursor-pointer hover:bg-cream transition-colors pointer-events-auto border border-charcoal/10 shadow-sm text-charcoal">
         Start Project
         <span className="w-2 h-2 bg-red-500 rounded-full inline-block animate-pulse"></span>
-      </div>
+      </a>
     </motion.nav>
   );
 }

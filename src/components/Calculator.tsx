@@ -84,11 +84,11 @@ export default function Calculator() {
 
     // Gentle tilt
     gsap.to(card, {
-      rotateY: x * 0.01,
-      rotateX: -y * 0.01,
-      ease: "power2.out",
-      duration: 0.5,
-      transformPerspective: 1000,
+      rotateY: x * 0.003,
+      rotateX: -y * 0.003,
+      ease: "power3.out",
+      duration: 1.5,
+      transformPerspective: 1200,
     });
   };
 
@@ -97,8 +97,8 @@ export default function Calculator() {
     gsap.to(cardRef.current, {
       rotateY: 0,
       rotateX: 0,
-      ease: "power3.out",
-      duration: 1,
+      ease: "power4.out",
+      duration: 2,
     });
   };
 

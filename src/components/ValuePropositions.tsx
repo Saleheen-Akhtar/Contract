@@ -46,13 +46,26 @@ export default function ValuePropositions() {
       if (container && scrollEl) {
         const scrollWidth = scrollEl.scrollWidth - window.innerWidth;
 
+        // Dynamic background color animation
+        gsap.to(container, {
+          backgroundColor: "#8B7355", // Bronze/Gold color transition
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top top",
+            end: `+=${scrollWidth}`,
+            scrub: 2, // Smooth, slow scrub
+          }
+        });
+
+        // Horizontal scroll animation
         gsap.to(scrollEl, {
           x: -scrollWidth,
           ease: "none",
           scrollTrigger: {
             trigger: container,
             pin: true,
-            scrub: 1,
+            scrub: 2, // Increased scrub value for buttery smoothness
             start: "top top",
             end: `+=${scrollWidth}`,
           }
@@ -66,7 +79,8 @@ export default function ValuePropositions() {
   return (
     <section
       ref={containerRef}
-      className="h-screen bg-charcoal text-white overflow-hidden relative border-y border-white/10"
+      className="h-screen bg-charcoal text-white overflow-hidden relative"
+      style={{ willChange: "background-color" }}
     >
       <div className="absolute top-12 left-6 lg:left-12 z-10">
         <h2 className="text-[clamp(2rem,4vw,4rem)] font-serif leading-none mix-blend-difference">

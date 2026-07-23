@@ -84,7 +84,7 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-48 px-6 lg:px-12 bg-cream text-charcoal border-t border-charcoal/10">
+    <section id="process" ref={containerRef} className="py-48 px-6 lg:px-12 bg-cream text-charcoal border-t border-charcoal/10">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-32 flex flex-col md:flex-row justify-between items-end gap-12">
           <h2 className="text-[clamp(4rem,8vw,10rem)] leading-none font-serif tracking-tighter uppercase">

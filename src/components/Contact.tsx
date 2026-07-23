@@ -1,86 +1,125 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 export default function Contact() {
+  const [focusedFields, setFocusedFields] = useState<Record<string, boolean>>({});
+  const [formValues, setFormValues] = useState({ name: '', email: '', project: '' });
+
+  const handleFocus = (field: string) => {
+    setFocusedFields(prev => ({ ...prev, [field]: true }));
+  };
+
+  const handleBlur = (field: string) => {
+    setFocusedFields(prev => ({ ...prev, [field]: false }));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => {
+    setFormValues(prev => ({ ...prev, [field]: e.target.value }));
+  };
+
   return (
-    <section className="py-32 px-6 md:px-12 bg-zinc-950 text-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none" />
+    <section id="contact" className="py-32 px-6 lg:px-12 bg-cream text-charcoal border-t border-charcoal/10">
+      <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 lg:gap-32">
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-tight">
-            Ready to <br /> Break Ground?
-          </h2>
-          <p className="text-xl text-zinc-400 font-light max-w-md mb-12">
-            Leave your details below. Our technical experts will reach out within 24 hours to discuss your plot, budget, and vision.
-          </p>
-
-          <div className="space-y-4 text-zinc-500 font-mono text-sm">
-            <p>MAIL: HELLO@CLASSICSGROUP.COM</p>
-            <p>CALL: +1 (800) 555-0199</p>
-            <p>HQ: 101 REALTY BLVD, NEW YORK, NY</p>
+        {/* Left: Text & Info */}
+        <div className="flex flex-col justify-between">
+          <div>
+            <h2 className="text-[clamp(4rem,7vw,8rem)] leading-none font-serif tracking-tighter mb-8">
+              START A<br/>DIALOGUE
+            </h2>
+            <p className="text-xl max-w-md text-charcoal/70 leading-relaxed font-light mb-16">
+              We take on a select number of commissions each year to ensure uncompromising quality. Reach out to discuss your vision.
+            </p>
           </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-zinc-900 p-8 md:p-12 rounded-3xl border border-zinc-800"
-        >
-          <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400">Full Name</label>
+          <div className="grid sm:grid-cols-2 gap-12">
+            <div>
+              <p className="uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 font-bold">Mumbai Office</p>
+              <p className="font-serif text-lg leading-relaxed">
+                Level 42, The Vertex,<br/>
+                Bandra Kurla Complex,<br/>
+                Mumbai, 400051
+              </p>
+            </div>
+            <div>
+              <p className="uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 font-bold">Direct Inquiry</p>
+              <a href="mailto:vision@classicsgroup.com" className="font-serif text-lg hover:text-bronze transition-colors block mb-2">
+                vision@classicsgroup.com
+              </a>
+              <a href="tel:+919876543210" className="font-serif text-lg hover:text-bronze transition-colors">
+                +91 98765 43210
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Minimalist Form */}
+        <div className="bg-white p-8 md:p-16 shadow-2xl border border-charcoal/5 flex flex-col justify-center">
+          <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
+
+            <div className="relative">
+              <label
+                className={`absolute left-0 transition-all duration-300 font-serif ${
+                  focusedFields.name || formValues.name.length > 0 ? '-top-6 text-xs text-charcoal/50 uppercase tracking-widest font-sans' : 'top-2 text-xl text-charcoal/50'
+                }`}
+              >
+                Your Name
+              </label>
               <input
                 type="text"
-                placeholder="John Doe"
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                value={formValues.name}
+                onChange={(e) => handleChange(e, 'name')}
+                onFocus={() => handleFocus('name')}
+                onBlur={() => handleBlur('name')}
+                className="w-full bg-transparent border-b border-charcoal/20 py-2 text-xl focus:outline-none focus:border-charcoal transition-colors"
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-400">Phone Number</label>
-                <input
-                  type="tel"
-                  placeholder="+1 (555) 000-0000"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-400">City / Location</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Brooklyn, NY"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors"
-                />
-              </div>
+            <div className="relative">
+              <label
+                className={`absolute left-0 transition-all duration-300 font-serif ${
+                  focusedFields.email || formValues.email.length > 0 ? '-top-6 text-xs text-charcoal/50 uppercase tracking-widest font-sans' : 'top-2 text-xl text-charcoal/50'
+                }`}
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={formValues.email}
+                onChange={(e) => handleChange(e, 'email')}
+                onFocus={() => handleFocus('email')}
+                onBlur={() => handleBlur('email')}
+                className="w-full bg-transparent border-b border-charcoal/20 py-2 text-xl focus:outline-none focus:border-charcoal transition-colors"
+              />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400">Project Details</label>
+            <div className="relative mt-16">
+              <label
+                className={`absolute left-0 transition-all duration-300 font-serif ${
+                  focusedFields.project || formValues.project.length > 0 ? '-top-6 text-xs text-charcoal/50 uppercase tracking-widest font-sans' : 'top-2 text-xl text-charcoal/50'
+                }`}
+              >
+                Project Details (Location, Scope, Vision)
+              </label>
               <textarea
-                rows={4}
-                placeholder="Tell us about your plot size, budget, and timeline..."
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                rows={3}
+                value={formValues.project}
+                onChange={(e) => handleChange(e, 'project')}
+                onFocus={() => handleFocus('project')}
+                onBlur={() => handleBlur('project')}
+                className="w-full bg-transparent border-b border-charcoal/20 py-2 text-xl focus:outline-none focus:border-charcoal transition-colors resize-none"
               ></textarea>
             </div>
 
-            <button className="w-full group relative inline-flex items-center justify-center px-8 py-5 font-bold text-white bg-blue-600 rounded-xl overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98]">
-               <span className="flex items-center gap-2">
-                 Submit Inquiry <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-               </span>
+            <button className="w-full py-6 bg-charcoal hover:bg-bronze text-white uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-4 group mt-8">
+              Submit Inquiry
+              <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-300" />
             </button>
           </form>
-        </motion.div>
+        </div>
+
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import Calculator from "@/components/Calculator";
 import Vision from "@/components/Vision";
 import CuratedResidences from "@/components/CuratedResidences";
 import Process from "@/components/Process";
+import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
@@ -19,6 +21,8 @@ export default function Home() {
         <Vision />
         <CuratedResidences />
         <Process />
+        <FAQ />
+        <Contact />
         <Footer />
       </PageTransition>
     </main>
